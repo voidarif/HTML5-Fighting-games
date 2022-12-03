@@ -176,6 +176,8 @@ function animate() {
 	c.fillRect(0,0,canvas.width,canvas.height)
 	background.update()
 	shop.update()
+	c.fillStyle = 'rgba(255,255,255,0.15)'
+	c.fillRect(0,0,canvas.width, canvas.height)
 	player.update()
 	enemy.update()
 
@@ -233,7 +235,10 @@ function animate() {
 	   	player.isAttacking = false
 		//console.log('player attackting')
 	   //enemy.health -= 20
-	   document.querySelector('#enemyHealth').style.width = enemy.health + "%"
+	   //document.querySelector('#enemyHealth').style.width = enemy.health + "%"
+	   gsap.to('#enemyHealth',{
+	   	width: enemy.health + "%"
+	   })
 	}
 
 	//if player misses
@@ -252,7 +257,11 @@ function animate() {
 		/*console.log('enemy attackting')*/
 		//player.health -= 20
 	   player.takeHit()
-		document.querySelector('#playerHealth').style.width = player.health + "%"
+		//document.querySelector('#playerHealth').style.width = player.health + "%"
+
+		gsap.to('#playerHealth',{
+	   	width: player.health + "%"
+	   })
 	}
 
 	//if enemy misses
@@ -271,6 +280,8 @@ function animate() {
 animate()
 
 window.addEventListener('keydown', (event) => {
+	if( ! player.dead){
+
 	switch(event.key){
 	case 'd':
 		keys.d.pressed = true
@@ -290,8 +301,13 @@ window.addEventListener('keydown', (event) => {
 	case ' ':
 		player.attack()
 		break
+	}
 
-		//enemy keys
+}
+
+	if(! enemy.dead){
+	switch(event.key){
+			//enemy keys
 	case 'ArrowRight':
 		keys.ArrowRight.pressed = true
 		enemy.lastKey = 'ArrowRight'
@@ -310,6 +326,7 @@ window.addEventListener('keydown', (event) => {
 	case 'ArrowDown':
 		enemy.attack()
 		break
+		}
 	}
 })
 
