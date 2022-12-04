@@ -280,6 +280,11 @@ function animate() {
 animate()
 
 window.addEventListener('keydown', (event) => {
+	//refresh browser
+	if(event.key === 'r'){
+		location.reload();
+	}
+
 	if( ! player.dead){
 
 	switch(event.key){
